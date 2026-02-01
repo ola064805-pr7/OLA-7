@@ -7,37 +7,113 @@ import {
   ArrowRight, 
   Send, 
   Youtube, 
-  ChevronRight,
   ExternalLink,
-  MapPin,
   Menu,
   X,
   Play,
-  Pause
+  Pause,
+  FolderOpen,
+  Archive
 } from 'lucide-react';
 
-const IMAGES = {
-  homeHero: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1200",
-  neuromusic: "https://images.unsplash.com/photo-1459749411177-042180ce673c?auto=format&fit=crop&q=80&w=800",
-  stories: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=800",
-  eurythmy: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800",
-  neurophoto: "https://images.unsplash.com/photo-1493106819501-66d381c466f1?auto=format&fit=crop&q=80&w=800",
-  presentations: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800",
-};
-
+// --- (1) ВАШИ КОНТАКТЫ И ИЗОБРАЖЕНИЯ ---
 const CONTACTS = {
   email1: "ohra.delf@yandex.ru",
   email2: "sharmohra@gmail.com",
-  city: "Москва, Россия",
   tgNeuro: "https://t.me/neirofotosharm",
   tgStories: "https://t.me/olgaskazky",
   youtube: "https://www.youtube.com/@MusicforGymnasticPerformances",
   spotify: "https://open.spotify.com/artist/41dNshRfit4g0078Kib0qH",
-  // ВСТАВЬТЕ ВАШУ ССЫЛКУ НА MP3 НИЖЕ
-  audioStream: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+  audioStream: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  
+  // ВСТАВЬТЕ СЮДА ВАШИ ССЫЛКИ:
+  mainPhoto: "https://raw.githubusercontent.com/stackblitz/stackblitz-images/main/olga_delf_sticker.png", // Фото в фиолетовом
+  roundSeal: "https://raw.githubusercontent.com/stackblitz/stackblitz-images/main/olga_delf_seal.png"   // Круглый стикер
 };
 
-type ViewType = 'home' | 'neuromusic' | 'stories' | 'neurophoto' | 'presentations' | 'eurythmy' | 'contact';
+// --- (2) ВЕСЬ КОНТЕНТ САЙТА ---
+const PAGES_DATA = {
+  neuromusic: {
+    title: "Music for Gymnastic Performances",
+    sub: "Аудио-архитектура для побед",
+    text: "Специализированный аудио-дизайн для художественной гимнастики. В проекте Music for Gymnastic Performances я объединяю хореографический опыт с передовыми технологиями звукозаписи. Каждый альбом — это результат математического анализа темпа и эмоционального наполнения.",
+    img: "https://images.unsplash.com/photo-1459749411177-042180ce673c?auto=format&fit=crop&q=80&w=800",
+    specs: ["3 авторских альбома", "Международное признание", "Анализ темпа"],
+    links: [
+      { label: "Spotify", url: CONTACTS.spotify, icon: <Music size={14} /> },
+      { label: "YouTube", url: CONTACTS.youtube, icon: <Youtube size={14} /> }
+    ]
+  },
+  stories: {
+    title: "Сказки Фантазии",
+    sub: "Словесные миры за гранью",
+    text: "«Сказки из мира фантазий» — это тексты, в которых буквы превращаются в живые образы. В Telegram-канале я ежедневно делюсь историями, которые балансируют на грани сна и реальности.",
+    img: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=800",
+    specs: ["Ежедневный канал", "Аудио-версии", "Авторский стиль"],
+    links: [
+      { label: "Читать в Telegram", url: CONTACTS.tgStories, icon: <Send size={14} /> }
+    ]
+  },
+  eurythmy: {
+    title: "Эвритмия",
+    sub: "Искусство видимой речи и пения",
+    text: "Эвритмия является фундаментом моего мировосприятия. Это искусство делать видимыми тончайшие вибрации звука и слова. В своей практике я исследую, как жест может трансформировать пространство.",
+    img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800",
+    specs: ["Личная практика", "Перформансы", "Обучение"],
+    links: [
+      { label: "Eurythmie.ru", url: "http://eurythmie.ru.tilda.ws", icon: <ExternalLink size={14} /> },
+      { label: "Фестиваль Эвритмии", url: "https://eurythmy-festival.ru", icon: <ExternalLink size={14} /> },
+      { label: "Написать", url: `mailto:${CONTACTS.email1}`, icon: <Send size={14} /> }
+    ]
+  },
+  neurophoto: {
+    title: "Магия Нейрофото",
+    sub: "Синтез ИИ и классики",
+    text: "Создаю визуальные воплощения мечты, используя нейронные сети как современный холст. Мои работы — это художественно выверенные портреты и ландшафты.",
+    img: "https://images.unsplash.com/photo-1493106819501-66d381c466f1?auto=format&fit=crop&q=80&w=800",
+    specs: ["Art-дирекшн", "Кастомные сеты", "AI Постпродакшн"],
+    links: [
+      { label: "Галерея в Telegram", url: CONTACTS.tgNeuro, icon: <Send size={14} /> }
+    ]
+  },
+  presentations: {
+    title: "Презентации",
+    sub: "Логика визуальных смыслов",
+    text: "Визуализация идей — это умение выделять главное. Я создаю презентации, которые работают как точные инструменты убеждения.",
+    img: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800",
+    specs: ["Инфографика", "Pitch Decks", "Бизнес-дизайн"],
+    links: [
+      { label: "Обсудить проект", url: `mailto:${CONTACTS.email1}`, icon: <ExternalLink size={14} /> }
+    ]
+  },
+  contact: {
+    title: "Связи / Contacts",
+    sub: "Открыта к сотрудничеству",
+    text: "По вопросам сотрудничества, создания музыки или нейро-визуализаций обращайтесь по указанным контактам.",
+    img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1200",
+    specs: ["Email Correspondence", "Global Collaboration", "Professional Network"],
+    links: [
+      { label: "ohra.delf@yandex.ru", url: `mailto:${CONTACTS.email1}`, icon: <ExternalLink size={14} /> },
+      { label: "sharmohra@gmail.com", url: `mailto:${CONTACTS.email2}`, icon: <ExternalLink size={14} /> }
+    ]
+  }
+};
+
+// --- (3) АРХИВНЫЕ ССЫЛКИ ---
+const ARCHIVE_LINKS = [
+  { 
+    title: "Общий архив (Яндекс Диск)", 
+    url: "https://disk.yandex.ru", 
+    description: "Документы, статьи и исходные материалы проекта." 
+  },
+  { 
+    title: "Медиа-архив", 
+    url: "https://disk.yandex.ru", 
+    description: "Фотографии высокого разрешения и аудио-превью." 
+  }
+];
+
+type ViewType = keyof typeof PAGES_DATA | 'home';
 
 export default function App() {
   const [view, setView] = useState<ViewType>('home');
@@ -55,99 +131,95 @@ export default function App() {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play().catch(e => console.error("Playback failed", e));
+        audioRef.current.play().catch(e => console.error("Audio error:", e));
       }
       setIsPlaying(!isPlaying);
     }
   };
 
   const Header = () => (
-    <header className="border-b-2 border-black pt-8 pb-4 px-4 md:px-8 bg-[#F9F9F7] sticky top-0 z-50">
+    <header className="border-b-4 border-black pt-6 pb-4 px-4 md:px-8 bg-[#F9F9F7] sticky top-0 z-50">
       <div className="max-w-screen-xl mx-auto">
         <audio ref={audioRef} src={CONTACTS.audioStream} loop />
         
-        <div className="flex justify-between items-end mb-6 font-mono text-[10px] uppercase tracking-[0.3em] border-b border-black/10 pb-2">
-          <div className="flex items-center gap-6">
-            <div className="flex gap-4">
-              <span>Выпуск №1</span>
-              <span className="hidden sm:inline">|</span>
-              <span>2025</span>
-            </div>
-            {/* Music Toggle - Newsprint Style */}
+        {/* ВЕРХНЯЯ СТРОКА МЕТАДАННЫХ */}
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 font-mono text-[10px] uppercase tracking-[0.2em] border-b border-black/10 pb-4 gap-4">
+          <div className="flex items-center gap-4">
+            <span className="font-bold">ТОМ 1.0</span>
+            <span className="opacity-30">|</span>
             <button 
               onClick={toggleMusic}
-              className={`
-                flex items-center gap-2 px-3 py-1 border border-black transition-all sharp-corners group
-                ${isPlaying ? 'bg-black text-white' : 'bg-white text-black hover:bg-black hover:text-white'}
-              `}
+              className={`flex items-center gap-2 px-3 py-1 border border-black transition-all ${isPlaying ? 'bg-black text-white' : 'hover:bg-black hover:text-white'}`}
             >
               {isPlaying ? <Pause size={10} /> : <Play size={10} />}
-              <span className="text-[9px] tracking-widest font-bold">
-                {isPlaying ? 'МУЗЫКА: ВКЛ' : 'МУЗЫКА: ВЫКЛ'}
-              </span>
+              <span className="text-[9px] font-black">{isPlaying ? 'СТОП' : 'СЛУШАТЬ'}</span>
             </button>
           </div>
-          
-          <div className="text-center hidden md:block italic">Творческий Альманах</div>
-          
-          <div className="flex items-center gap-4">
-            <span className="hidden sm:inline">{new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
-            <span className="hidden sm:inline">|</span>
-            <div className="flex gap-3">
-              <a href={CONTACTS.tgStories} target="_blank" className="hover:text-[#CC0000] transition-colors"><Send size={14} /></a>
-              <a href={CONTACTS.youtube} target="_blank" className="hover:text-[#CC0000] transition-colors"><Youtube size={14} /></a>
+          <div className="text-center font-serif italic text-[12px] uppercase tracking-widest hidden lg:block">Издание об искусстве и цифровом видении</div>
+          <div className="font-bold">{new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' }).toUpperCase()}</div>
+        </div>
+        
+        {/* ЦЕНТРАЛЬНЫЙ ЛОГОТИП */}
+        <div className="relative flex flex-col items-center mb-6">
+          <span className="font-mono text-[9px] uppercase tracking-[0.6em] text-neutral-400 mb-2">Портфолио</span>
+          <div className="flex items-center justify-center w-full relative">
+            <h1 
+              onClick={() => setView('home')}
+              className="font-serif text-5xl md:text-8xl lg:text-[110px] font-black tracking-tighter leading-none cursor-pointer hover:text-[#CC0000] transition-colors uppercase text-center"
+            >
+              OLGA DELF
+            </h1>
+            
+            {/* МОНОГРАММА */}
+            <div className="hidden xl:flex absolute right-0 top-1/2 -translate-y-1/2 w-20 h-20 border-2 border-black items-center justify-center bg-white rotate-3">
+               <div className="text-center">
+                 <div className="font-serif text-2xl font-black leading-none">OD</div>
+                 <div className="font-mono text-[8px] tracking-tighter uppercase mt-1">EST. 2024</div>
+               </div>
             </div>
           </div>
         </div>
-        
-        <div className="flex flex-col items-center mb-8 relative">
+
+        {/* НАВИГАЦИЯ */}
+        <nav className="border-y-2 border-black mt-4 relative">
           <button 
-            className="absolute left-0 top-1/2 -translate-y-1/2 md:hidden p-2 border border-black sharp-corners"
+            className="md:hidden w-full py-4 font-black uppercase text-xs flex items-center justify-center gap-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMenuOpen ? <X size={16} /> : <Menu size={16} />} Меню разделов
           </button>
           
-          <h1 
-            onClick={() => setView('home')}
-            className="font-serif text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.85] cursor-pointer hover:text-[#CC0000] transition-colors text-center"
-          >
-            OLGA DELF
-          </h1>
-          <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] mt-6 text-neutral-500 text-center">
-            Хореограф • Эвритмист • AI творец
-          </p>
-        </div>
-
-        <nav className={`
-          md:flex w-full border-y border-black py-3 justify-center gap-10 font-sans text-[11px] font-bold uppercase tracking-[0.25em] bg-[#F9F9F7]
-          ${isMenuOpen ? 'flex flex-col items-center absolute top-full left-0 border-b-2 shadow-xl bg-[#F9F9F7]' : 'hidden md:flex'}
-        `}>
-          {(['home', 'neuromusic', 'stories', 'eurythmy', 'neurophoto', 'contact'] as const).map(v => (
-            <button 
-              key={v}
-              onClick={() => setView(v)} 
-              className={`
-                ${view === v ? 'text-[#CC0000] underline decoration-2 underline-offset-8' : ''} 
-                hover:text-[#CC0000] transition-colors py-2 md:py-0
-              `}
-            >
-              {v === 'home' ? 'Главная' : v === 'neuromusic' ? 'Музыка' : v === 'stories' ? 'Сказки' : v === 'eurythmy' ? 'Эвритмия' : v === 'neurophoto' ? 'Нейрофото' : 'Контакты'}
-            </button>
-          ))}
+          <div className={`
+            md:flex w-full py-2 justify-center gap-4 lg:gap-12 font-sans text-[11px] font-extrabold uppercase tracking-[0.2em] bg-[#F9F9F7]
+            ${isMenuOpen ? 'flex flex-col items-center' : 'hidden md:flex'}
+          `}>
+            {(['home', 'neuromusic', 'stories', 'eurythmy', 'neurophoto', 'contact'] as const).map(v => (
+              <button 
+                key={v}
+                onClick={() => setView(v)} 
+                className={`
+                  px-4 py-2 transition-all relative group
+                  ${view === v ? 'text-[#CC0000]' : 'hover:text-[#CC0000]'} 
+                `}
+              >
+                {v === 'home' ? 'Главная' : v === 'neuromusic' ? 'Музыка' : v === 'stories' ? 'Сказки' : v === 'eurythmy' ? 'Эвритмия' : v === 'neurophoto' ? 'Нейрофото' : 'Контакты'}
+                {view === v && <div className="absolute -bottom-2 left-0 w-full h-1 bg-black" />}
+              </button>
+            ))}
+          </div>
         </nav>
       </div>
     </header>
   );
 
-  const Marquee = () => (
-    <div className="border-b-2 border-black bg-[#111111] text-[#F9F9F7] overflow-hidden whitespace-nowrap py-2 relative z-30">
-      <div className="inline-block animate-[marquee_50s_linear_infinite] uppercase font-mono text-[11px] tracking-[0.4em]">
-        ОЛЬГА ХРАПУТСКАЯ • MUSIC FOR GYMNASTICS PERFORMANCES • СКАЗКИ ИЗ МИРА ФАНТАЗИЙ • МАГИЯ НЕЙРОФОТО • ЭВРИТМИЯ • 
-        ОЛЬГА ХРАПУТСКАЯ • MUSIC FOR GYMNASTICS PERFORMANCES • СКАЗКИ ИЗ МИРА ФАНТАЗИЙ • МАГИЯ НЕЙРОФОТО • ЭВРИТМИЯ • 
+  const Ticker = () => (
+    <div className="border-b-2 border-black bg-[#111111] text-[#F9F9F7] overflow-hidden whitespace-nowrap py-1.5 z-40 relative">
+      <div className="inline-block animate-[ticker_40s_linear_infinite] uppercase font-mono text-[10px] tracking-[0.4em] font-bold">
+        ОЛЬГА ХРАПУТСКАЯ • MUSIC FOR GYMNASTIC PERFORMANCES • СКАЗКИ ИЗ МИРА ФАНТАЗИЙ • МАГИЯ НЕЙРОФОТО • ЭВРИТМИЯ • 
+        ОЛЬГА ХРАПУТСКАЯ • MUSIC FOR GYMNASTIC PERFORMANCES • СКАЗКИ ИЗ МИРА ФАНТАЗИЙ • МАГИЯ НЕЙРОФОТО • ЭВРИТМИЯ • 
       </div>
       <style>{`
-        @keyframes marquee {
+        @keyframes ticker {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
@@ -155,220 +227,166 @@ export default function App() {
     </div>
   );
 
-  const renderContent = () => {
-    if (view === 'home') {
-      return (
-        <div className="animate-in fade-in duration-1000">
-          <section className="grid grid-cols-1 lg:grid-cols-12 border-b-2 border-black">
-            <div className="lg:col-span-8 p-8 md:p-16 lg:p-24 border-r-2 border-black flex flex-col justify-center bg-white relative">
-              <div className="absolute top-8 left-8 font-serif text-6xl opacity-10 select-none">“</div>
-              <span className="font-mono text-[11px] uppercase tracking-[0.5em] text-[#CC0000] mb-8 block">Колонка автора</span>
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-10 tracking-tight text-balance text-left">
-                Движение — это жизнь, <br />
-                сотканная из поиска...
-              </h2>
-              <div className="max-w-2xl text-left">
-                <p className="font-body text-xl md:text-2xl italic leading-relaxed text-neutral-600 mb-8">
-                  «Я верю, что искусство — это мост между земным движением и вечной гармонией. Мы танцуем свои мысли и поем свои чувства».
-                </p>
-                <div className="h-px w-20 bg-black mb-8" />
-                <p className="font-mono text-xs uppercase tracking-widest text-neutral-400">Автор: Ольга Храпутская</p>
-              </div>
-            </div>
-            <div className="lg:col-span-4 p-4 md:p-8 bg-black flex flex-col justify-end relative overflow-hidden min-h-[500px] group">
-              <div 
-                className="absolute top-0 left-0 w-full h-full grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 bg-cover bg-center" 
-                style={{ backgroundImage: `url('${IMAGES.homeHero}')` }}
-              />
-              <div className="relative z-10 border-4 border-white p-8 bg-black/50 backdrop-blur-md sharp-corners">
-                  <h4 className="font-serif text-2xl mb-3 font-bold text-white italic">Вдохновение</h4>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-300 mb-8">Профиль творца</p>
-                  <button onClick={() => setView('eurythmy')} className="w-full py-4 bg-white text-black font-black uppercase tracking-widest text-[11px] hover:bg-[#CC0000] hover:text-white transition-all sharp-corners">
-                    Узнать больше
-                  </button>
-              </div>
-            </div>
-          </section>
-
-          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b-2 border-black">
-            {[
-              { id: 'neuromusic', title: 'Музыка', sub: 'Music for Gymnastics Performances', icon: <Music size={28} /> },
-              { id: 'stories', title: 'Сказки', sub: 'Миры фантазий в словах', icon: <BookOpen size={28} /> },
-              { id: 'neurophoto', title: 'Нейрофото', sub: 'Ваш идеальный образ', icon: <Camera size={28} /> },
-              { id: 'presentations', title: 'Презентации', sub: 'Визуализация смыслов', icon: <Presentation size={28} /> },
-            ].map((item, idx) => (
-              <div 
-                key={item.id}
-                onClick={() => setView(item.id as ViewType)}
+  const ArchiveSection = () => (
+    <section className="max-w-screen-xl mx-auto border-t-4 border-black mt-12 bg-white block overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-12 w-full">
+        <div className="lg:col-span-4 p-8 md:p-10 border-b-2 lg:border-b-0 lg:border-r-2 border-black bg-neutral-50 flex flex-col justify-center">
+           <div className="flex items-center gap-3 mb-4">
+             <Archive className="text-[#CC0000]" size={28} />
+             <h4 className="font-serif text-2xl font-black uppercase tracking-tighter">Цифровой Архив</h4>
+           </div>
+           <p className="font-body text-base leading-relaxed mb-6">
+             Доступ к облачным хранилищам, публикациям и материалам проекта.
+           </p>
+           <div className="h-1 w-16 bg-[#CC0000]" />
+        </div>
+        <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2">
+            {ARCHIVE_LINKS.map((link, idx) => (
+              <a 
+                key={idx}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`
-                  group cursor-pointer p-10 flex flex-col items-center text-center hover:bg-white transition-all 
-                  ${idx !== 3 ? 'lg:border-r border-black' : ''}
-                  ${idx % 2 === 0 ? 'md:border-r lg:border-r border-black' : ''}
-                  ${idx > 1 ? 'border-t lg:border-t-0 border-black' : ''}
-                  ${idx === 1 ? 'border-t md:border-t-0 border-black' : ''}
+                  group p-8 border-b-2 md:border-b-0 border-black flex flex-col justify-between hover:bg-black hover:text-white transition-all
+                  ${idx === 0 ? 'md:border-r-2 border-black' : ''}
                 `}
               >
-                <div className="mb-8 p-5 border-2 border-black group-hover:bg-black group-hover:text-white transition-all sharp-corners">
-                  {item.icon}
+                <div>
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-[#CC0000] group-hover:text-white block mb-3">Яндекс Диск</span>
+                  <h5 className="font-serif text-xl font-black mb-2">{link.title}</h5>
+                  <p className="font-body text-xs opacity-60 group-hover:opacity-100">{link.description}</p>
                 </div>
-                <h3 className="font-serif text-2xl font-black mb-2 uppercase tracking-tighter">{item.title}</h3>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-8">{item.sub}</p>
-                <div className="h-px w-10 bg-black/20 mb-6" />
-                <span className="text-[10px] font-black uppercase tracking-widest flex items-center gap-3 group-hover:text-[#CC0000]">
-                  Перейти <ArrowRight size={14} />
-                </span>
-              </div>
+                <div className="mt-6 flex items-center gap-2 font-mono text-[9px] font-bold uppercase tracking-widest">
+                  Открыть папку <ExternalLink size={12} />
+                </div>
+              </a>
             ))}
-          </section>
-
-          <section className="py-16 text-center border-b-2 border-black bg-white">
-             <div className="font-serif text-xl text-neutral-300 tracking-[1.5em] mb-4">✧ ✧ ✧</div>
-             <p className="font-mono text-[10px] uppercase tracking-[0.5em] text-neutral-400">Издано в Москве, Россия</p>
-          </section>
         </div>
-      );
-    }
+      </div>
+    </section>
+  );
 
-    if (view === 'contact') {
-      return (
-        <div className="max-w-screen-xl mx-auto py-20 px-4 md:px-8 animate-in fade-in slide-in-from-bottom-6">
-          <div className="text-center mb-16">
-            <span className="font-mono text-xs uppercase tracking-[0.5em] text-[#CC0000] mb-6 block">Обратная связь</span>
-            <h2 className="font-serif text-5xl md:text-7xl font-black uppercase tracking-tighter">Контакты</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border-4 border-black hard-shadow bg-white">
-            <div className="lg:col-span-5 p-12 border-b-4 lg:border-b-0 lg:border-r-4 border-black bg-[#F9F9F7]">
-              <div className="space-y-12">
-                <section>
-                  <h3 className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#CC0000] mb-6 border-b-2 border-black pb-2">Местоположение</h3>
-                  <div className="flex items-center gap-4 font-serif text-2xl font-bold"><MapPin size={20} /> {CONTACTS.city}</div>
-                </section>
-                <section>
-                  <h3 className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#CC0000] mb-6 border-b-2 border-black pb-2">Электронная почта</h3>
-                  <a href={`mailto:${CONTACTS.email1}`} className="block font-serif text-xl md:text-2xl hover:text-[#CC0000] underline underline-offset-8 decoration-2 mb-6 break-all">{CONTACTS.email1}</a>
-                  <a href={`mailto:${CONTACTS.email2}`} className="block font-serif text-xl md:text-2xl hover:text-[#CC0000] underline underline-offset-8 decoration-2 break-all">{CONTACTS.email2}</a>
-                </section>
-              </div>
-            </div>
-            <div className="lg:col-span-7 p-12 flex flex-col justify-center">
-              <h3 className="font-serif text-3xl md:text-4xl font-black mb-8 leading-tight italic text-balance">Пишите о сотрудничестве и творческих проектах.</h3>
-              <p className="font-body text-lg md:text-xl leading-relaxed mb-10 text-neutral-700">
-                Буду рада вашим предложениям, отзывам о музыке и сказках или запросам на создание нейро-образов. 
-                Каждый запрос рассматривается лично Ольгой.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto">
-                <a href={CONTACTS.tgStories} target="_blank" className="flex items-center justify-center gap-4 border-2 border-black p-4 hover:bg-black hover:text-white transition-all font-black uppercase text-[11px] tracking-widest sharp-corners">
-                  <Send size={16} /> Telegram
-                </a>
-                <a href={CONTACTS.youtube} target="_blank" className="flex items-center justify-center gap-4 border-2 border-black p-4 hover:bg-black hover:text-white transition-all font-black uppercase text-[11px] tracking-widest sharp-corners">
-                  <Youtube size={16} /> YouTube
-                </a>
-              </div>
-            </div>
+  const renderHome = () => (
+    <div className="animate-in fade-in duration-700">
+      <section className="grid grid-cols-1 lg:grid-cols-2 border-b-2 border-black items-stretch bg-white">
+        <div className="p-8 md:p-16 lg:p-20 border-b-2 lg:border-b-0 lg:border-r-2 border-black flex flex-col justify-center">
+          <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[#CC0000] mb-6 block font-bold">Главная Тема</span>
+          <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl font-black leading-[0.9] mb-10 tracking-tighter text-left uppercase">
+            Гармония <br />
+            в Движении <br />
+            и Цифре
+          </h2>
+          <div className="text-left border-t-4 border-black pt-8">
+            <p className="font-body text-lg md:text-xl leading-relaxed text-neutral-800 drop-cap">
+              Искусство — это живой организм, который эволюционирует вместе с нами. Мой путь — это симбиоз классической эвритмии и современных нейросетевых технологий. Мы ищем новые способы выражения вечных истин через музыку, слово и образ.
+            </p>
+            <p className="font-mono text-[11px] uppercase tracking-widest mt-8 font-black">— Ольга Храпутская</p>
           </div>
         </div>
-      );
-    }
+        
+        {/* ФОТО СПРАВА */}
+        <div className="p-8 md:p-12 bg-[#F9F9F7] flex flex-col justify-center items-center">
+          <div className="relative group w-full max-w-sm">
+             <div className="absolute -inset-4 border-2 border-dashed border-black opacity-20 group-hover:opacity-40 transition-opacity" />
+             <img 
+               src={CONTACTS.mainPhoto} 
+               onError={(e) => {
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=800";
+               }}
+               alt="Olga Delf" 
+               className="w-full relative z-10 shadow-[15px_15px_0px_0px_rgba(0,0,0,0.05)] filter contrast-110" 
+             />
+             <div className="absolute bottom-4 -left-8 z-20 bg-black text-white p-3 rotate-[-4deg] font-mono text-[9px] uppercase tracking-widest border border-white/20">
+               Автор Проекта
+             </div>
+          </div>
+        </div>
+      </section>
 
-    const pages = {
-      neuromusic: {
-        title: "Music for Gymnastics Performances",
-        sub: "Специализированный аудио-дизайн",
-        text: "Под брендом Music for Gymnastics Performances я создаю специализированную музыку для выступлений. Мои работы — это синтез хореографического чутья и возможностей современных технологий. \nНа данный момент выпущено 3 полноценных альбома, которые получили признание в сообществе художественной гимнастики. Каждая композиция тщательно выверена по темпу, динамике и акцентам, необходимым для профессионального спорта.",
-        img: IMAGES.neuromusic,
-        details: ["3 профессиональных альбома", "Индивидуальный анализ ритма", "Верифицированный артист Spotify"],
-        ctas: [
-          { label: "Слушать в Spotify", link: CONTACTS.spotify, icon: <Music size={16} /> },
-          { label: "Слушать на YouTube", link: CONTACTS.youtube, icon: <Youtube size={16} /> }
-        ]
-      },
-      stories: {
-        title: "Сказки Фантазии",
-        sub: "Литературные миры Ольги Храпутской",
-        text: "«Сказки из мира фантазий» — это ментальные путешествия, которые я пишу, вдохновляясь эвритмией и живым движением жизни. \nСлова имеют силу оживлять целые миры. Мой проект — это пространство, где взрослые и дети могут снова поверить в чудо. Это литература, которая лечит и наполняет светом.",
-        img: IMAGES.stories,
-        details: ["Авторский Telegram-канал", "Аудио-сказки в озвучке", "Атмосферная проза"],
-        ctas: [
-          { label: "Читать в Telegram", link: CONTACTS.tgStories, icon: <Send size={16} /> }
-        ]
-      },
-      eurythmy: {
-        title: "Искусство Эвритмии",
-        sub: "Видимая речь и пение",
-        text: "Эвритмия — это не просто танец, а образ мышления. Она позволяет сделать невидимые силы звука и слова видимыми в пространстве через гармоничный жест. \nКак свободный эвритмист, я исследую границы между жестом и смыслом. Это фундамент всей моей творческой деятельности и источник вдохновения для музыки и текстов.",
-        img: IMAGES.eurythmy,
-        details: ["Индивидуальное обучение", "Сценические постановки", "Интеграция искусств"],
-        ctas: [
-          { label: "Написать автору", link: `mailto:${CONTACTS.email1}`, icon: <ExternalLink size={16} /> }
-        ]
-      },
-      neurophoto: {
-        title: "Магия Нейрофото",
-        sub: "Искусство с помощью ИИ",
-        text: "Создаю портреты мечты с помощью ИИ. Нейронные сети — это кисти нового времени, требующие мастерства и тонкого вкуса. \nЯ помогаю создавать визуальные образы, которые раньше казались невозможными. Магия нейрофото позволяет воплотить ваши самые смелые фантазии в безупречном художественном качестве.",
-        img: IMAGES.neurophoto,
-        details: ["Генерация AI образов", "Личный брендинг", "Художественное руководство"],
-        ctas: [
-          { label: "Telegram Канал", link: CONTACTS.tgNeuro, icon: <Send size={16} /> }
-        ]
-      },
-      presentations: {
-        title: "Презентации",
-        sub: "Визуализация концепций",
-        text: "Я помогаю структурировать ваши мысли и облекать их в безупречную визуальную форму. \nКаждая идея заслуживает того, чтобы быть понятой с первого взгляда. Я создаю дизайн презентаций, который не просто информирует, но и эмоционально вовлекает вашу аудиторию, превращая данные в историю.",
-        img: IMAGES.presentations,
-        details: ["Дизайн презентаций", "Логика инфографики", "Брендовый сторителлинг"],
-        ctas: [
-          { label: "Обсудить проект", link: `mailto:${CONTACTS.email1}`, icon: <ExternalLink size={16} /> }
-        ]
-      }
-    };
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b-2 border-black">
+        {[
+          { id: 'neuromusic', title: 'Музыка', sub: 'Gymnastics Sound', icon: <Music size={24} /> },
+          { id: 'stories', title: 'Сказки', sub: 'Literature', icon: <BookOpen size={24} /> },
+          { id: 'neurophoto', title: 'Нейрофото', sub: 'AI Photography', icon: <Camera size={24} /> },
+          { id: 'presentations', title: 'Визуал', sub: 'Design Logic', icon: <Presentation size={24} /> },
+        ].map((item, idx) => (
+          <div 
+            key={item.id}
+            onClick={() => setView(item.id as ViewType)}
+            className={`
+              group cursor-pointer p-10 flex flex-col items-center text-center hover:bg-white transition-all
+              ${idx !== 3 ? 'lg:border-r-2 border-black' : ''}
+              ${idx % 2 === 0 ? 'md:border-r-2 lg:border-r-2 border-black' : ''}
+              ${idx > 1 ? 'border-t-2 lg:border-t-0 border-black' : ''}
+              ${idx === 1 ? 'border-t-2 md:border-t-0 border-black' : ''}
+            `}
+          >
+            <div className="mb-6 p-4 border-2 border-black group-hover:bg-black group-hover:text-white transition-all bg-white">
+              {item.icon}
+            </div>
+            <h3 className="font-serif text-2xl font-black mb-1 uppercase tracking-tighter">{item.title}</h3>
+            <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-neutral-400 mb-6">{item.sub}</p>
+            <span className="text-[10px] font-black uppercase tracking-widest flex items-center gap-3 group-hover:text-[#CC0000]">
+              Читать далее <ArrowRight size={12} />
+            </span>
+          </div>
+        ))}
+      </section>
+      <ArchiveSection />
+    </div>
+  );
 
-    const p = pages[view as keyof typeof pages];
+  const renderArticle = () => {
+    const p = PAGES_DATA[view as keyof typeof PAGES_DATA];
     if (!p) return null;
 
     return (
-      <div className="max-w-screen-xl mx-auto border-x-2 border-black bg-white animate-in fade-in slide-in-from-bottom-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch border-b-2 border-black">
-          <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 border-b-2 lg:border-b-0 lg:border-r-2 border-black">
-            <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[#CC0000] mb-6 block">Специальный репортаж</span>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-black mb-8 leading-[1.1] tracking-tighter uppercase">{p.title}</h2>
-            <p className="font-serif italic text-2xl md:text-3xl text-neutral-500 mb-10 border-b-2 border-black pb-8">{p.sub}</p>
-            <div className="font-body text-xl leading-relaxed text-justify space-y-6 first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:mt-2 first-letter:text-[#CC0000] first-letter:font-black">
-              {p.text.split('\n').map((para, i) => <p key={i}>{para}</p>)}
+      <div className="max-w-screen-xl mx-auto border-x-2 border-black bg-white animate-in slide-in-from-bottom-8 duration-500">
+        <div className="grid grid-cols-1 lg:grid-cols-12">
+          <div className="lg:col-span-8 p-8 md:p-12 lg:p-16 border-b-2 lg:border-b-0 lg:border-r-2 border-black">
+            <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[#CC0000] mb-4 block font-bold">Раздел</span>
+            <h2 className="font-serif text-4xl lg:text-5xl font-black mb-6 uppercase tracking-tighter leading-none">{p.title}</h2>
+            <p className="font-serif italic text-xl text-neutral-400 mb-8 border-b-4 border-black pb-6">{p.sub}</p>
+            <div className="font-body text-lg lg:text-xl leading-relaxed text-justify drop-cap">
+              <p className="text-neutral-800">{p.text}</p>
             </div>
-            <div className="mt-12 pt-8 border-t border-black/10 text-neutral-300 font-serif text-xl tracking-[1em] text-center">
-              * * *
+            <div className="mt-12 flex flex-wrap gap-4">
+               {p.links.map((link, i) => (
+                 <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="border-2 border-black px-6 py-3 font-black uppercase text-[10px] hover:bg-black hover:text-white transition-all flex items-center gap-2">
+                   {link.label} {link.icon}
+                 </a>
+               ))}
             </div>
           </div>
-          <div className="lg:col-span-5 p-8 md:p-12 lg:p-16 space-y-10 bg-[#F9F9F7]">
-            <div className="border-2 border-black p-3 bg-white hard-shadow-hover transition-all">
-              <div className="overflow-hidden border border-black/10">
-                <img src={p.img} alt={p.title} className="w-full photo-reveal" />
-              </div>
-              <div className="p-4 font-mono text-[9px] uppercase text-center border-t-2 border-black mt-2 tracking-[0.2em]">
-                Рис. 2025 // Архивный материал
-              </div>
-            </div>
-            <div className="bg-[#111111] text-[#F9F9F7] p-8 md:p-10 sharp-corners">
-              <h4 className="font-serif text-xl font-black mb-8 border-b border-white/20 pb-4 uppercase tracking-widest">Особенности</h4>
-              <ul className="space-y-4 font-body text-lg text-neutral-300">
-                {p.details.map((d, i) => (
-                  <li key={i} className="flex gap-4 border-b border-white/5 pb-3 last:border-0">
-                    <ChevronRight size={18} className="text-[#CC0000] shrink-0 mt-1" /> 
-                    {d}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-10 space-y-4">
-                {p.ctas.map((cta, i) => (
-                  <a key={i} href={cta.link} target="_blank" className="w-full bg-white text-black py-4 font-black uppercase tracking-[0.2em] text-[11px] hover:bg-[#CC0000] hover:text-white transition-all flex justify-center items-center gap-3 sharp-corners border border-transparent hover:border-black">
-                    {cta.label} {cta.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
+          <div className="lg:col-span-4 p-8 bg-[#F9F9F7] space-y-8 flex flex-col items-center">
+             <div className="w-full border-4 border-black p-2 bg-white overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+               <img src={p.img} alt={p.title} className="w-full photo-grayscale border border-black transition-all duration-700 hover:scale-105" />
+             </div>
+             
+             {/* КРУГЛАЯ ПЕЧАТЬ */}
+             <div className="w-32 h-32 relative rotate-6">
+                <img 
+                  src={CONTACTS.roundSeal} 
+                  onError={(e) => {
+                     e.currentTarget.src = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200&h=200";
+                  }}
+                  className="w-full h-full object-cover rounded-full border-2 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]" 
+                  alt="Печать" 
+                />
+             </div>
+
+             <div className="bg-[#111111] text-white p-6 w-full border-b-4 border-[#CC0000]">
+                <h4 className="font-serif text-lg font-bold mb-4 italic border-b border-white/20 pb-2">Детали</h4>
+                <ul className="space-y-3 font-mono text-[10px] uppercase tracking-wider">
+                  {p.specs.map((s, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className="mt-1 w-2 h-2 bg-[#CC0000] shrink-0" /> 
+                      <span>{s}</span>
+                    </li>
+                  ))}
+                </ul>
+             </div>
           </div>
         </div>
       </div>
@@ -376,37 +394,33 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col selection:bg-[#CC0000] selection:text-white bg-[#F9F9F7]">
+    <div className="min-h-screen flex flex-col bg-[#F9F9F7] overflow-x-hidden">
       <Header />
-      <Marquee />
-      <main className="flex-grow">
-        {renderContent()}
-      </main>
-      <footer className="bg-[#111111] text-[#F9F9F7] p-12 md:p-24 lg:p-32 mt-auto border-t-8 border-black">
-        <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-          <div>
-            <h2 className="font-serif text-5xl md:text-6xl font-black mb-8 tracking-tighter">OLGA DELF</h2>
-            <div className="h-1.5 w-16 bg-[#CC0000] mb-8" />
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-500 max-w-sm leading-loose">
-              Пространство творческого поиска в музыке, слове и движении. Создано Ольгой Храпутской. 
-              Все права на интеллектуальную собственность защищены редакцией 2025 года.
+      <Ticker />
+      <main className="flex-grow">{view === 'home' ? renderHome() : renderArticle()}</main>
+      
+      {view !== 'home' && view !== 'contact' && <ArchiveSection />}
+
+      <footer className="bg-[#111111] text-white pt-20 pb-12 px-8 border-t-[10px] border-black mt-16 overflow-hidden">
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="space-y-6">
+            <h2 className="font-serif text-3xl md:text-5xl font-black tracking-tighter uppercase leading-none">OLGA DELF</h2>
+            <div className="h-1 w-16 bg-[#CC0000]" />
+            <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-neutral-400 max-w-sm leading-loose">
+              Мультидисциплинарный проект Ольги Храпутской. <br /> Основано в 2024 году. Москва.
             </p>
           </div>
-          <div className="flex flex-col md:items-end justify-between">
-            <div className="space-y-8 text-left md:text-right w-full">
-              <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-neutral-400 block">Социальные сети</span>
-              <a href={`mailto:${CONTACTS.email1}`} className="block font-serif text-2xl md:text-3xl hover:text-[#CC0000] underline underline-offset-8 decoration-2 break-all">{CONTACTS.email1}</a>
-              <div className="flex gap-6 mt-10 md:justify-end">
-                <a href={CONTACTS.youtube} target="_blank" className="p-4 border-2 border-white/20 hover:border-white text-white/70 hover:text-white transition-all sharp-corners"><Youtube size={20} /></a>
-                <a href={CONTACTS.tgStories} target="_blank" className="p-4 border-2 border-white/20 hover:border-white text-white/70 hover:text-white transition-all sharp-corners"><Send size={20} /></a>
-                <a href={CONTACTS.spotify} target="_blank" className="p-4 border-2 border-white/20 hover:border-white text-white/70 hover:text-white transition-all sharp-corners"><Music size={20} /></a>
+          <div className="flex flex-col justify-end lg:items-end">
+            <div className="space-y-4">
+              <span className="font-mono text-[9px] uppercase tracking-[0.5em] text-neutral-500 block font-bold">Связаться</span>
+              <a href={`mailto:${CONTACTS.email1}`} className="block font-serif text-xl hover:text-[#CC0000] transition-colors">{CONTACTS.email1}</a>
+              <div className="flex gap-3">
+                <a href={CONTACTS.tgStories} target="_blank" className="p-3 border border-white/10 hover:bg-white hover:text-black transition-all"><Send size={16} /></a>
+                <a href={CONTACTS.youtube} target="_blank" className="p-3 border border-white/10 hover:bg-white hover:text-black transition-all"><Youtube size={16} /></a>
+                <a href={CONTACTS.spotify} target="_blank" className="p-3 border border-white/10 hover:bg-white hover:text-black transition-all"><Music size={16} /></a>
               </div>
             </div>
           </div>
-        </div>
-        <div className="max-w-screen-xl mx-auto mt-24 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center font-mono text-[10px] text-neutral-600 uppercase tracking-[0.4em]">
-          <span>© 2025 АРХИВЫ OLGA DELF</span>
-          <span className="mt-4 md:mt-0 italic">Издание: Vol 2.0 // Отпечатано в Москве</span>
         </div>
       </footer>
     </div>
